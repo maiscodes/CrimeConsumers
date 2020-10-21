@@ -1,0 +1,370 @@
+{ "openapi":"3.0.0",
+  "info":{
+    "title":"CAB230: Web Computing API",
+     "description":"This is an Express API based on the Australian Crime Database, developed by Maisie Vuong n9950460.",
+     "version":"1.0.0",
+     "termsOfService":"http://swagger.io/terms/",
+     "contact":{"email":"maisie.vuong@qut.edu.au"},
+     "license":{
+       "name":"Apache 2.0",
+       "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
+       }
+     },
+     "servers":[
+       {
+         "url": "https://localhost:443"
+         }
+      ],
+      "basePath":"/api",
+      "paths":{
+        "/register":{
+          "post":{
+            "tags":["Authentication"],
+            "summary":"Registers a new user account",
+            "requestBody": {
+              "required": true,
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "properties": {
+                      "email":{
+                        "type": "string"
+                      },
+                      "password": {
+                        "type": "string"
+                      }
+                    },
+                    "example": {
+                      "email": "demo-user@gmail.com",
+                      "password": "demouserpassword"
+                    }
+                  }
+                }
+              }
+            },
+            "responses":{
+              "201":{
+                "description":"Created",
+                "content": {
+                  "appplication/json": {
+                    "example": {
+                      "message": "yay! you've successfully registered your user account :)"
+                      }
+                  }
+                }
+              },
+              "400": {
+                "description": "Bad Request",
+                "content": {
+                  "appplication/json": {
+                    "example": {
+                      "message": "oops! It looks like that user already exists :("
+                      }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "/login":{
+          "post":{
+            "tags":["Authentication"],
+            "summary":"Login with an existing user account",
+            "requestBody": {
+              "required": true,
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "properties": {
+                      "email":{
+                        "type": "string"
+                      },
+                      "password": {
+                        "type": "string"
+                      }
+                    },
+                    "example": {
+                      "email": "demo-user@gmail.com",
+                      "password": "demouserpassword"
+                    }
+                  }
+                }
+              }
+            },
+            "responses":{
+              "200":{
+                "description":"OK",
+                "content": {
+                  "appplication/json": {
+                    "example": {
+                      "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo1Nzg2LCJlbWFpbCI6ImRlbW8xMjM0QGdtYWlsLmNvbSJ9LCJpYXQiOjE1NTUzMjQ2MDIsImV4cCI6MTU1NTQxMTAwMn0.mo85iKuAQ_h8n8-6pkeNNs5CCnV0G8hScxhi_ml_Q6c",
+                      "token_type": "Bearer",
+                      "expires_in": 86400
+                      }
+                  }
+                }
+              },
+              "401": {
+                "description": "Unauthorized",
+                "content": {
+                  "appplication/json": {
+                    "example": {
+                      "message": "invalid login - bad password"
+                      }
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "/search":{
+          "get":{
+            "tags":["Search"],
+            "summary":"",
+            "description":"Search for Offence Data",
+            "operationId":"xx",
+            "produces":["application/json"],
+            "parameters": [
+              {
+                "in": "query",
+                    "name": "offence",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "required": true,
+                    "description": "Name of the Offence to search for"
+              },
+              {
+                "in": "query",
+                    "name": "area",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "description": "List of comma-separated Areas (LGAs) to filter search results by"
+              },
+              {
+                "in": "query",
+                    "name": "age",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "description": "List of comma-separated Ages to filter search results by"
+              },
+              {
+                "in": "query",
+                    "name": "gender",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "description": "List of comma-separated Genders to filter search results by"
+              },
+              {
+                "in": "query",
+                    "name": "year",
+                    "schema": {
+                      "type": "integer"
+                    },
+                    "description": "List of comma-separated Years to filter search results by"
+              },
+              {
+                "in": "query",
+                    "name": "month",
+                    "schema": {
+                      "type": "integer"
+                    },
+                    "description": "List of comma-separated Months to filter search results by (1-12)"
+              }
+                  ],
+                  "responses":{
+                    "200":{
+                      "description":"OK",
+                      "content": {
+                        "appplication/json": {
+                          "example": {
+                              "query": {
+                              "offence": "Homicide (Murder)"
+                              },
+                              "result": [
+                                {
+                                  "LGA": "Aurukun Shire Council",
+                                  "total": 4,
+                                  "lat": -27.470812,
+                                  "lng": 153.022455
+                                }
+                              ]
+                            }
+                        }
+                      }
+                    },
+                    "400": {
+                      "description": "Bad request",
+                      "content": {
+                        "appplication/json": {
+                          "example": {
+                            "message": "oops! it looks like you're missing the offence query parameter"
+                            }
+                        }
+                      }
+                    },
+                    "401": {
+                      "description": "Unauthorised",
+                      "content": {
+                        "appplication/json": {
+                          "example": {
+                            "message": "oh no! it looks like your authorization token is invalid..."
+                            }
+                        }
+                      }
+                    }
+                  }
+          }
+      },
+      "/offences":{
+        "get":{
+          "tags":["Helpers"],
+          "summary":"",
+          "description":"",
+          "operationId":"xx",
+          "produces":["application/json"],
+                "responses":{
+                  "200":{
+                    "description":"OK",
+                    "content": {
+                      "appplication/json": {
+                        "example": {
+                          "offences": [
+                            "Advertising Prostitution",
+                            "Armed Robbery"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+        }
+    },
+    "/areas":{
+      "get":{
+        "tags":["Helpers"],
+        "summary":"",
+        "description":"",
+        "operationId":"xx",
+        "produces":["application/json"],
+              "responses":{
+                "200":{
+                  "description":"OK",
+                  "content": {
+                    "appplication/json": {
+                      "example": {
+                        "areas": [
+                          "Aurukun Shire Council",
+                          "Balonne Shire Council"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+      }
+  },
+  "/ages":{
+    "get":{
+      "tags":["Helpers"],
+      "summary":"",
+      "description":"",
+      "operationId":"xx",
+      "produces":["application/json"],
+            "responses":{
+              "200":{
+                "description":"OK",
+                "content": {
+                  "appplication/json": {
+                    "example": {
+                      "ages": [
+                        "Adult",
+                        "Juvenile"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "/ages":{
+          "get":{
+            "tags":["Helpers"],
+            "summary":"",
+            "description":"",
+            "operationId":"xx",
+            "produces":["application/json"],
+                  "responses":{
+                    "200":{
+                      "description":"OK",
+                      "content": {
+                        "appplication/json": {
+                          "example": {
+                            "ages": [
+                              "Adult",
+                              "Juvenile"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                }
+              }
+            },
+            "/genders":{
+              "get":{
+                "tags":["Helpers"],
+                "summary":"",
+                "description":"",
+                "operationId":"xx",
+                "produces":["application/json"],
+                      "responses":{
+                        "200":{
+                          "description":"OK",
+                          "content": {
+                            "appplication/json": {
+                              "example": {
+                                "genders": [
+                                  "Female",
+                                  "Male"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                    }
+                  }
+                },
+                "/years":{
+                  "get":{
+                    "tags":["Helpers"],
+                    "summary":"",
+                    "description":"",
+                    "operationId":"xx",
+                    "produces":["application/json"],
+                          "responses":{
+                            "200":{
+                              "description":"OK",
+                              "content": {
+                                "appplication/json": {
+                                  "example": {
+                                    "years": [
+                                      2001,
+                                      2002
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                        }
+                      }
+                    }
+
+
+    }
+}

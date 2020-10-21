@@ -1,0 +1,44 @@
+/*
+Styling filters
+*/
+.filters {
+  display:inline-block;
+  width: 20%;
+  max-width: 200px;
+  float: left;
+}
+
+.dropDown {
+  border-radius: 12px;
+  height: 5vh;
+}
+
+.eachFilter {
+  padding: 5px;
+}
+
+.eachFilter label button {
+    font-size: 3vh;
+}
+
+.eachFilter button {
+  padding: 3px 10px 3px 10px;
+}
+
+
+.searchBar {
+  width: 40%;
+  max-width: 400px;
+  min-width: 200px;
+  padding: 10px;
+  border: 1px;
+  border-radius: 12px;
+  -webkit-box-shadow: 0px 0px 30px -12px rgba(0,0,0,0.41);
+  margin: 10px;
+}
+
+.result {
+  width: 60%;
+  display: inline-block;
+  float: right;
+}

@@ -1,0 +1,11 @@
+/*
+Styling Google Maps
+*/
+.googleMapContainer {
+  margin: 0;
+  top: 100px;
+  left: 40vw;
+  position: absolute;
+  width: 50%;
+  height: 80%;
+}

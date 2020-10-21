@@ -1,0 +1,9 @@
+/*
+Styling bar graph
+*/
+.barChart {
+  margin: 0;
+  position: relative;
+  width: 50vw;
+  height: 125vh;
+}
